@@ -2,6 +2,7 @@ const express = require("express");
 const Users = require("./users-model");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const restricted = require('../middlewares/rrestricted-middleware');
 
 const router = express.Router();
 
@@ -55,7 +56,7 @@ router.post("/login", (req, res) => {
       res.status(500).json(error);
     });
 });
-router.get('/users', (req, res) => {
+router.get('/users', restricted, (req, res) => {
     Users.find()
       .then(users => {
         res.json(users);
